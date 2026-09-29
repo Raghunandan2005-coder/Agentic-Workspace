@@ -1,4 +1,5 @@
-## Agentic Project Workspace
+## AGENTC WORKSPACE
+
 Multi-Agent Development System using Google ADK, Agentic RAG, MCP, and Persistent Project Memory.
 
 Agentic Project Workspace is a multi-agent development workspace designed to take a software project requirement, retrieve relevant project knowledge, plan implementation, modify project files, run tests, review the implementation, and maintain persistent project state across sessions.
@@ -160,3 +161,205 @@ Responsibilities:
 •	Provide failure evidence when tests fail
 
 The Testing Agent uses a restricted test execution tool rather than unrestricted shell access
+
+Reviewer Agent:
+
+Responsible for final technical review.
+
+Responsibilities:
+
+•	Check requirement alignment
+
+•	Inspect implementation quality
+
+•	Review project structure
+
+•	Consider test results
+
+•	Approve or reject the implementation
+
+The Reviewer is read-only and does not modify project files or persistent memory
+
+
+##  Project Knowledge RAG
+
+Project requirements and supporting documentation are stored separately from the actual project source code.
+
+The RAG layer allows agents to retrieve relevant project knowledge instead of passing the entire documentation context through
+every agent interaction.
+
+
+Current RAG pipeline
+
+     Project Requirements
+            │
+            ▼
+      Document Ingestion
+            │	
+            ▼
+         Chunking
+            │
+            ▼
+        Ollama Embeddings
+            │
+            ▼
+        ChromaDB
+            │
+            ▼
+      Similarity Retrieval
+            │
+            ▼	
+     Planner / Agents
+
+Current implementation uses:
+
+•	Python
+
+•	LangChain
+
+•	ChromaDB
+
+•	Ollama
+
+•	nomic-embed-text
+
+The Workspace's RAG represents what the project should contain or accomplish.
+
+Persistent Project Memory :
+
+Project Knowledge and Project Memory serve different purposes
+
+Project Knowledge
+
+Answers:
+What should the project do ?
+
+Examples:	
+
+•	Requirements
+
+•	Specifications
+
+•	Project documentation
+
+Project Memory
+
+Answers:
+
+What has happened in the project?
+
+Current persistent state includes information such as:
+
+•	Current task
+
+•	Workflow status
+
+•	Last completed task
+
+•	Next task
+
+•	Agent responsible for the latest update
+
+•	Validation state
+
+This separation allows the system to distinguish between requirements and execution history.
+
+
+
+## MCP Filesystem Integration
+
+The architecture is:
+
+  Agent
+    │
+    ▼
+Google ADK / MCP Client
+    │
+    ▼
+Filesystem MCP Server
+    │
+    ▼
+  Project Files
+
+
+
+The filesystem MCP server provides operations such as:
+
+•	Read files
+
+•	Write files
+
+•	Edit files
+
+•	Create directories
+
+•	List directories
+
+•	Search files
+
+•	Move files
+
+•	Inspect file information
+
+
+The MCP server is intentionally used as the filesystem interaction layer rather than giving the agents unrestricted filesystem
+or shell access
+
+
+## Correction Loop
+
+One of the important capabilities of the Workspace is responding to test failures.
+
+Example:
+
+         Coder
+          │	
+          ▼
+         Testing Agent
+             │
+             ├── PASS ──────► Reviewer
+             │
+             └── FAIL
+                  │
+                  ▼
+                Manager
+                  │
+                  ▼
+                 Coder
+                  │
+                  ▼
+             Testing Agent
+
+The Manager does not blindly continue after a failure.
+ 
+It uses the testing evidence to decide whether another correction cycle is required.
+
+## Project Isolation
+The Workspace supports multiple projects inside a shared project workspace.
+
+          projectworkspace/
+          │
+          ├── TaskFlow_CLI/
+          │   ├── taskflow_cli/
+          │   └── tests/
+          ├── Future_Project/
+          │   └── ...
+
+Each project receives its own dedicated directory.
+
+Agents are instructed to:
+
+•	Identify the correct project directory
+
+•	Work only inside that project
+
+•	Avoid modifying other projects
+
+•	Reuse an existing project directory when continuing work
+
+•	Never place project source files directly in the shared workspace root
+
+This isolation is important when validating the system across multiple projects
+
+## Current Validation
+                 
