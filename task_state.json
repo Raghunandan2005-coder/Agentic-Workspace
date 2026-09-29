@@ -1,0 +1,10 @@
+{
+  "project_name": "Agentic Project Workspace",
+  "current_task": "Fix API schema bug: separate request/response schemas for patients, slots, and appointments so database-generated fields (id, created_at) are not required from the client.",
+  "status": "completed",
+  "last_completed_task": "Fix API schema bug: separate request/response schemas for patients, slots, and appointments so database-generated fields (id, created_at) are not required from the client.",
+  "next_task": null,
+  "updated_by": "coder_agent",
+  "updated_at": "2026-09-28T13:19:41",
+  "update_at": "2026-09-19T12:28:18"
+}
