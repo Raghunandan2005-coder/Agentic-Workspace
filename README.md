@@ -362,4 +362,172 @@ Agents are instructed to:
 This isolation is important when validating the system across multiple projects
 
 ## Current Validation
-                 
+
+Test 1 — TaskFlow CLI
+
+The first end-to-end validation project was a TaskFlow CLI application.
+
+The Workspace was required to:
+
+•	Understand the requirements
+
+•	Plan the project
+
+•	Build the application
+
+•	Create tests
+
+•	Run the tests
+
+•	Respond to failures
+
+•	Correct the implementation
+
+•	Retest
+
+•	Perform a final review
+
+
+Initial test result:
+
+38 tests
+
+34 passed
+
+4 failed
+
+After the correction loop:
+
+38 tests
+
+38 passed
+
+The Reviewer subsequently returned an approval after checking the implementation and test results.
+
+This demonstrated the basic:
+
+Plan → Build → Test → Fix → Retest → Review
+
+workflow.
+
+## Test 2 — Expense Tracker	
+
+The second validation project is an interactive Expense Tracker.
+
+The requirements include:
+
+•	Add expenses
+
+•	Edit expenses
+
+•	Delete expenses
+
+•	Search expenses
+
+•	Filter expenses
+
+•	Calculate total spending
+
+•	Category-wise summaries
+
+•	Persistent storage
+
+•	Interactive UI
+
+•	Automated testing
+
+The storage technology is intentionally not prescribed in the requirements.
+
+The Planner should determine an appropriate implementation approach based on the project requirements and scope.
+
+This test is intended to determine whether the Workspace can generalize from a CLI project to an interactive application.
+
+
+Project Structure
+
+    Agentic Workspace/
+
+    │
+
+    └── agenticworkspace/
+
+    │
+    ├── Manageragent/
+    │   ├── __init__.py
+    │   ├── agent.py
+    │   ├── agents.py
+    │   ├── memory_tools.py
+    │   ├── mcp_filesystem.py
+    │   └── test_tools.py
+    │
+    ├── Knowledgebase/
+    │   ├── __init__.py
+    │   ├── ingestion.py
+    │   ├── retrieval.py
+    │   └── chroma_db/
+    │
+    ├── projectmemory/
+    │   └── task_state.json
+    │
+    └── projectworkspace/
+        ├── TaskFlow_CLI/
+
+
+
+Technology    	        Purpose :
+
+Python	                Core implementation
+
+Google ADK	            Agent orchestration
+
+Gemini	                LLM reasoning
+
+LangChain             	RAG pipeline
+
+ChromaDB         	      Vector storage
+
+Ollama	                Local embeddings
+
+nomic-embed-text	      Embedding model
+
+MCP	Tool                integration
+
+Filesystem MCP     	    Project file operations
+
+Pytest	                Automated testing
+
+GitHub                	Source control
+
+
+
+## Current Limitations
+
+This project is currently a learning and validation system rather than a production autonomous software-development platform.
+
+Current areas still being explored include:
+
+•	More diverse end-to-end project validations
+
+•	Agent communication and delegation quality
+
+•	Agent evaluation
+
+•	Cost and token monitoring
+
+•	Observability
+
+•	More robust failure recovery
+
+•	Production deployment
+
+•	Larger project complexity
+
+The Workspace is intentionally being validated on multiple project types before making stronger claims about its generality.
+
+## Project Status:
+
+Status: Active Development & Validation	
+
+The Workspace has completed its first end-to-end project validation with TaskFlow CLI and is being tested and Appointment
+
+booking system against additional project types to validate its generality and reliability.
